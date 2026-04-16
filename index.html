@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mouhya01 — Full-Stack Developer based in Djibouti. JavaScript, React, Node.js, Python, MATLAB." />
+  <meta name="author" content="Mouhya01" />
+  <title>Mouhyadine | Full-Stack Developer</title>
+
+  <!-- Google Fonts: Syne (display) + DM Mono (body / code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5.3.7 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+  <!-- Shared design system -->
+  <link rel="stylesheet" href="assets/css/main.css" />
+
+  <style>
+    /* ── Specific style tag for hoem ── */
+
+    /* ── Hero section ────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display:    flex;
+      align-items: center;
+      padding-top: 5rem;
+      overflow:   hidden;
+    }
+
+    .hero-orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(99,179,237,0.13) 0%, transparent 70%);
+      top: -150px; right: -100px;
+    }
+    .hero-orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(159,122,234,0.10) 0%, transparent 70%);
+      bottom: 0; left: -80px;
+    }
+
+    /* Availability badge */
+    .hero-tag {
+      display:       inline-flex;
+      align-items:   center;
+      gap:           0.5rem;
+      background:    rgba(99,179,237,0.08);
+      border:        1px solid rgba(99,179,237,0.22);
+      border-radius: var(--radius-pill);
+      padding:       0.35rem 1rem;
+      font-size:     0.72rem;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:         var(--clr-accent-cyan);
+      margin-bottom: 1.8rem;
+    }
+    .hero-tag .dot {
+      width: 6px; height: 6px;
+      background:    var(--clr-accent-cyan);
+      border-radius: 50%;
+      animation:     pulse-dot 2.5s infinite;
+    }
+
+    .hero-title {
+      font-size:     clamp(2.8rem, 7vw, 5.2rem);
+      font-weight:   800;
+      line-height:   1.05;
+      letter-spacing:-0.02em;
+      margin-bottom: 1.4rem;
+    }
+    .hero-subtitle {
+      font-size:     clamp(0.82rem, 1.4vw, 0.96rem);
+      color:         var(--clr-text-muted);
+      max-width:     500px;
+      line-height:   1.90;
+      margin-bottom: 2.4rem;
+    }
+    .hero-cta {
+      display:   flex;
+      flex-wrap: wrap;
+      gap:       1rem;
+      margin-bottom: 3.5rem;
+    }
+    .scroll-hint {
+      display:     flex;
+      align-items: center;
+      gap:         0.75rem;
+      color:       var(--clr-text-dimmed);
+      font-size:   0.72rem;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+    }
+    .scroll-hint .line {
+      width: 40px; height: 1px;
+      background: linear-gradient(to right, var(--clr-accent-cyan), transparent);
+    }
+
+    /* ── Photo placeholder ───────────────────────────────────── */
+    .photo-wrapper {
+      position:    relative;
+      display:     flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Rotating gradient ring behind the avatar */
+    .photo-ring {
+      position:      absolute;
+      width:  310px; height: 310px;
+      border-radius: 50%;
+      background:    conic-gradient(
+        var(--clr-accent-cyan),
+        var(--clr-accent-violet),
+        var(--clr-accent-teal),
+        var(--clr-accent-cyan)
+      );
+      animation:     spin-ring 8s linear infinite;
+      filter:        blur(1px);
+      opacity:       0.5;
+    }
+    @keyframes spin-ring {
+      from { transform: rotate(0deg);   }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* Outer frosted ring */
+    .photo-outer {
+      position:        relative;
+      width:  294px; height: 294px;
+      border-radius:   50%;
+      background:      var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border:          2px solid rgba(255,255,255,0.10);
+      display:         flex;
+      align-items:     center;
+      justify-content: center;
+      overflow:        hidden;
+      z-index:         1;
+    }
+
+
+    .photo-outer img.profile-photo {
+      width:       100%;
+      height:      100%;
+      object-fit:  cover;
+      border-radius: 50%;
+      object-position: center 25%;
+      display:     block;
+    }
+
+
+    .photo-placeholder {
+      display:        flex;
+      flex-direction: column;
+      align-items:    center;
+      justify-content:center;
+      gap:            0.6rem;
+      text-align:     center;
+      padding:        1.5rem;
+      width:          100%;
+      height:         100%;
+    }
+    .photo-placeholder i {
+      font-size: 3.5rem;
+      color:     var(--clr-accent-cyan);
+      opacity:   0.5;
+    }
+    .photo-placeholder span {
+      font-size:     0.68rem;
+      letter-spacing:0.10em;
+      text-transform:uppercase;
+      color:         var(--clr-text-dimmed);
+      line-height:   1.6;
+    }
+
+    /* Floating badge over the photo */
+    .photo-badge {
+      position:        absolute;
+      bottom:  12px; right: 12px;
+      background:      var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border:          1px solid rgba(99,179,237,0.20);
+      border-radius:   10px;
+      padding:         0.5rem 0.85rem;
+      font-size:       0.70rem;
+      color:           var(--clr-accent-cyan);
+      letter-spacing:  0.08em;
+      text-transform:  uppercase;
+      z-index:         2;
+      animation:       float 5s ease-in-out infinite;
+      white-space:     nowrap;
+    }
+
+    /* Stats row */
+    .hero-stats {
+      display: flex;
+      gap:     1rem;
+      margin-top: 2rem;
+    }
+    .stat-pill {
+      flex:       1;
+      background: var(--glass-bg);
+      border:     var(--glass-border);
+      border-radius: 10px;
+      padding:    0.9rem 0.75rem;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    .stat-pill .number {
+      display:                 block;
+      font-family:             'Syne', sans-serif;
+      font-size:               1.4rem;
+      font-weight:             800;
+      background:              var(--grad-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip:         text;
+    }
+    .stat-pill .label {
+      font-size:     0.62rem;
+      color:         var(--clr-text-dimmed);
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    /* ── Code block (below photo on desktop, hidden on mobile) ── */
+    .code-block {
+      background:      rgba(7, 8, 15, 0.72);
+      border:          1px solid rgba(255,255,255,0.07);
+      border-radius:   14px;
+      padding:         1.4rem;
+      backdrop-filter: blur(16px);
+      box-shadow:      0 20px 60px rgba(0,0,0,0.50);
+      font-size:       0.76rem;
+      line-height:     2;
+      position:        relative;
+      overflow:        hidden;
+      margin-top:      1.25rem;
+    }
+    .code-block::before {
+      content:    '';
+      position:   absolute;
+      top: 0; left: 0; right: 0;
+      height:     1px;
+      background: var(--grad-accent);
+      opacity:    0.60;
+    }
+    .code-top {
+      display:       flex;
+      align-items:   center;
+      gap:           0.5rem;
+      margin-bottom: 0.85rem;
+      padding-bottom:0.65rem;
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .dot-r { width:9px;height:9px;border-radius:50%;background:#ff5f57; }
+    .dot-y { width:9px;height:9px;border-radius:50%;background:#ffbd2e; }
+    .dot-g { width:9px;height:9px;border-radius:50%;background:#28c840; }
+    .code-fname { margin-left:auto;font-size:0.65rem;color:var(--clr-text-dimmed); }
+
+    .cl { display:flex;gap:1rem; }
+    .ln { color:var(--clr-text-dimmed);user-select:none;min-width:1.5ch; }
+    .k  { color:var(--clr-accent-violet); }
+    .f  { color:var(--clr-accent-cyan);   }
+    .s  { color:var(--clr-accent-teal);   }
+    .cm { color:var(--clr-text-dimmed);font-style:italic; }
+    .p  { color:var(--clr-text-muted);   }
+
+    /* ── Skills section ──────────────────────────────────────── */
+    #skills { background: linear-gradient(to bottom, transparent, rgba(13,16,33,0.40), transparent); }
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .skill-card {
+      padding:  1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-icon  { font-size:1.8rem;margin-bottom:1rem;display:block; }
+    .skill-name  { font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.4rem; }
+    .skill-desc  { font-size:0.78rem;color:var(--clr-text-muted);line-height:1.7; }
+    .skill-tags  { display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem; }
+
+    /* ── Portfolio teaser ───────────────────────────────────── */
+    .proj-card   { padding:0;overflow:hidden; }
+    .proj-thumb  { height:190px;position:relative;overflow:hidden; }
+    .proj-thumb-inner {
+      position:   absolute;inset:0;
+      display:    flex;align-items:center;justify-content:center;
+      font-size:  4rem;opacity:0.12;
+      font-family:'Syne',sans-serif;font-weight:800;color:#fff;
+    }
+    .proj-thumb-overlay {
+      position:   absolute;inset:0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(7,8,15,0.95));
+    }
+    .proj-body  { padding:1.5rem; }
+    .proj-type  { font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--clr-accent-cyan);margin-bottom:0.4rem; }
+    .proj-title { font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:0.5rem; }
+    .proj-desc  { font-size:0.78rem;color:var(--clr-text-muted);line-height:1.7;margin-bottom:1.1rem; }
+    .proj-link  {
+      font-size:0.73rem;color:var(--clr-accent-cyan);text-decoration:none;
+      display:inline-flex;align-items:center;gap:0.4rem;
+      letter-spacing:0.06em;text-transform:uppercase;
+      transition:gap var(--transition-fast);
+    }
+    .proj-link:hover { gap:0.7rem;color:var(--clr-accent-cyan); }
+
+    .proj-thumb.v1 { background:linear-gradient(135deg,rgba(159,122,234,0.30),rgba(99,179,237,0.15)); }
+    .proj-thumb.v2 { background:linear-gradient(135deg,rgba(79,209,197,0.30), rgba(99,179,237,0.15)); }
+    .proj-thumb.v3 { background:linear-gradient(135deg,rgba(251,182,206,0.20),rgba(159,122,234,0.20)); }
+
+    /* ── About teaser ───────────────────────────────────────── */
+    #about-teaser { border-top:1px solid var(--clr-border);border-bottom:1px solid var(--clr-border); }
+    .about-card   { padding:3rem; }
+    .quote-mark   {
+      font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;
+      color:var(--clr-accent-cyan);opacity:0.15;line-height:1;
+      margin-bottom:-1rem;display:block;
+    }
+    .about-quote  { font-size:clamp(1rem,2vw,1.25rem);font-family:'Syne',sans-serif;font-weight:600;line-height:1.55;margin-bottom:1.4rem; }
+    .about-sub    { font-size:0.82rem;color:var(--clr-text-muted);max-width:460px;line-height:1.85;margin-bottom:2rem; }
+    .location-badge {
+      display:inline-flex;align-items:center;gap:0.5rem;
+      background:rgba(79,209,197,0.08);border:1px solid rgba(79,209,197,0.22);
+      border-radius:var(--radius-pill);padding:0.35rem 0.9rem;
+      font-size:0.72rem;color:var(--clr-accent-teal);letter-spacing:0.06em;margin-bottom:1.5rem;
+    }
+
+    /* ── CTA banner ─────────────────────────────────────────── */
+    #cta          { padding:5rem 0; }
+    .cta-card     { padding:3.5rem;text-align:center;position:relative;overflow:hidden; }
+    .cta-card::before {
+      content:'';position:absolute;inset:-1px;border-radius:inherit;
+      padding:1px;background:var(--grad-accent);
+      -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+      -webkit-mask-composite:destination-out;mask-composite:exclude;opacity:0.45;
+    }
+    .cta-glow {
+      position:absolute;width:300px;height:300px;
+      background:radial-gradient(circle,rgba(99,179,237,0.12),transparent 70%);
+      top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
+    }
+    .cta-title { font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin-bottom:1rem;position:relative; }
+    .cta-sub   { font-size:0.88rem;color:var(--clr-text-muted);max-width:460px;margin:0 auto 2.4rem;line-height:1.8;position:relative; }
+    .cta-btns  { display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;position:relative; }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 992px) {
+      .photo-wrapper { margin-top:3rem; }
+      .about-card    { padding:2rem; }
+      .cta-card      { padding:2rem; }
+    }
+    @media (max-width: 576px) {
+      .hero-stats  { flex-direction:column; }
+      .hero-cta    { flex-direction:column; }
+      .cta-btns    { flex-direction:column;align-items:center; }
+      .photo-ring,
+      .photo-outer { width:240px;height:240px; }
+      .photo-ring  { width:254px;height:254px; }
+    }
+  </style>
+</head>
+
+<script src="assets/js/chatbot.js"></script>
+
+<body>
+
+<!-- The Navbar-->
+<nav id="navbar" aria-label="Main navigation">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a href="index.html" class="nav-brand">Mouhyadine</a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html"             class="active">Home</a></li>
+      <li><a href="about.html"                            >About</a></li>
+      <li><a href="portfolio-details.html"                >Projects</a></li>
+      <li><a href="contact.html"                          >Contact</a></li>
+      <li>
+        <a href="contact.html" class="btn-primary-glow ms-2" style="padding:0.4rem 1.2rem;font-size:0.72rem;">
+          <i class="bi bi-arrow-right-circle"></i> Hire Me
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<section id="hero" aria-label="Hero">
+  <div class="orb hero-orb-1"></div>
+  <div class="orb hero-orb-2"></div>
+
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      <!-- ── Left column: copy ── -->
+      <div class="col-lg-6">
+
+        <div class="hero-tag fade-up delay-1">
+          <span class="dot"></span>
+          Available
+        </div>
+
+        <h1 class="hero-title fade-up delay-2">
+          Building the<br>
+          <span class="text-gradient">digital world</span><br>
+          brick by brick.
+        </h1>
+
+        <p class="hero-subtitle fade-up delay-3">
+          I'm <strong style="color:var(--clr-text-primary)">Mouhyadine</strong> — Full-Stack Developer & Computer Engineering student
+          based in Djibouti&nbsp;🇩🇯. I engineer scalable web applications
+          with a rigorous, systems-first mindset.
+        </p>
+
+        <div class="hero-cta fade-up delay-4">
+          <a href="portfolio-details.html" class="btn-primary-glow">
+            <i class="bi bi-grid-3x3-gap-fill"></i> View My Work
+          </a>
+          <a href="about.html" class="btn-glass">
+            <i class="bi bi-person-lines-fill"></i> About Me
+          </a>
+        </div>
+
+        <div class="scroll-hint fade-up delay-5">
+          <span class="line"></span>
+          <span>Scroll to explore</span>
+        </div>
+      </div>
+
+      <!-- ── Right column: photo + code block ── -->
+      <div class="col-lg-6 fade-up delay-3">
+
+        <div class="photo-wrapper">
+          <!-- Rotating glow ring -->
+          <div class="photo-ring"></div>
+
+          
+          <div class="photo-outer">
+            <img
+              src="assets/img/profile.jpg"
+              alt="Mouhya — Full-Stack Developer"
+              class="profile-photo"
+            />
+          </div>
+
+          <!-- Floating status badge -->
+          <div class="photo-badge">
+            <i class="bi bi-circle-fill me-1" style="color:#28c840;font-size:0.5rem;"></i>
+            Open to work
+          </div>
+        </div>
+
+        <!-- Stat pills below photo -->
+        <div class="hero-stats">
+          <div class="stat-pill">
+            <span class="number">Polyvalent</span>
+            <span class="label"></span>
+          </div>
+          <div class="stat-pill">
+            <span class="number">5+</span>
+            <span class="label">Technologies</span>
+          </div>
+          <div class="stat-pill">
+            <span class="number">∞</span>
+            <span class="label">Ambition</span>
+          </div>
+        </div>
+
+        <!-- Floating code block -->
+        <div class="code-block" style="animation:float 6s ease-in-out infinite;">
+          <div class="code-top">
+            <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+            <span class="code-fname">mouhya01.js</span>
+          </div>
+          <div class="cl"><span class="ln">1</span><span><span class="k">const</span> <span class="f">developer</span> <span class="p">= {</span></span></div>
+          <div class="cl"><span class="ln">2</span><span>&nbsp;&nbsp;<span class="f">name</span><span class="p">:</span> <span class="s">'Mouhyadine'</span><span class="p">,</span></span></div>
+          <div class="cl"><span class="ln">3</span><span>&nbsp;&nbsp;<span class="f">stack</span><span class="p">: [</span><span class="s">'React'</span><span class="p">,</span> <span class="s">'Node.js'</span><span class="p">,</span> <span class="s">'Python'</span><span class="p">],</span></span></div>
+          <div class="cl"><span class="ln">4</span><span>&nbsp;&nbsp;<span class="f">available</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span></span></div>
+          <div class="cl"><span class="ln">5</span><span>&nbsp;&nbsp;<span class="f">location</span><span class="p">:</span> <span class="s">'Djibouti 🇩🇯'</span></span></div>
+          <div class="cl"><span class="ln">6</span><span><span class="p">};</span></span></div>
+          <div class="cl"><span class="ln">7</span><span><span class="cm">// Let's build something great.</span></span></div>
+        </div>
+
+      </div><!-- /right col -->
+    </div><!-- /row -->
+  </div>
+</section>
