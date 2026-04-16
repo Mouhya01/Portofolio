@@ -118,10 +118,11 @@ Mouhya01-Portfolio/
 │   │
 │   └── img/
 │       ├── profile.jpg           # Profile photo (add manually)
-│       └── mouhya01-cv.pdf       # CV download (add manually)
+│       ├── certs-folder          #Folders that countains the certifications    
 │
-├── wireframes.html               # Interactive wireframe documentation
-└── README.md                     # This file
+├── wireframes-folder               # Wireframe folders
+└── README.md                    
+└── mouhyadine-cv.pdf  # CV download 
 ```
 
 > **Convention note:** `index.html` IS the home page. Web servers (Apache, Nginx, GitHub Pages) automatically serve `index.html` as the default document in a directory. There is no separate `home.html`.
