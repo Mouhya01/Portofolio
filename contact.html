@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact Mouhya01 — Full-Stack Developer available for Freelance projects from May 2026." />
+  <title>Contact | Mouhyadine</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+
+  <style>
+    /* ── Page header ─────────────────────────────────────────── */
+    .page-header {
+      padding:    10rem 0 5rem;
+      position:   relative;
+      overflow:   hidden;
+      text-align: center;
+    }
+    .page-header-orb {
+      width:600px;height:400px;
+      background:radial-gradient(ellipse,rgba(79,209,197,0.10) 0%,transparent 70%);
+      top:-80px;left:50%;transform:translateX(-50%);
+    }
+    .page-header h1 { font-size:clamp(2.8rem,6vw,4.5rem);font-weight:800;line-height:1.1; }
+    .page-header p  { font-size:0.88rem;color:var(--clr-text-muted);max-width:500px;margin:1rem auto 0;line-height:1.85; }
+
+    /* ── Contact form ────────────────────────────────────────── */
+    .form-card { padding:2.5rem; }
+
+    /* Override Bootstrap form controls for dark glassmorphism */
+    .form-label {
+      font-size:0.73rem;letter-spacing:0.10em;text-transform:uppercase;
+      color:var(--clr-text-muted);margin-bottom:0.5rem;
+    }
+    .form-control, .form-select {
+      background:    rgba(255,255,255,0.04);
+      border:        1px solid rgba(255,255,255,0.10);
+      border-radius: 10px;
+      color:         var(--clr-text-primary);
+      font-family:   'DM Mono', monospace;
+      font-size:     0.84rem;
+      padding:       0.75rem 1rem;
+      transition:    border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .form-control:focus, .form-select:focus {
+      background:   rgba(255,255,255,0.06);
+      border-color: var(--clr-accent-cyan);
+      box-shadow:   0 0 0 3px rgba(99,179,237,0.12);
+      color:        var(--clr-text-primary);
+      outline:      none;
+    }
+    .form-control::placeholder { color:var(--clr-text-dimmed); }
+    .form-select option         { background:#0d1021;color:var(--clr-text-primary); }
+    textarea.form-control       { resize:vertical;min-height:140px; }
+
+    /* Character counter */
+    .char-count { font-size:0.68rem;color:var(--clr-text-dimmed);text-align:right;margin-top:0.3rem; }
+
+    /* Submit button full width */
+    .btn-submit {
+      width:100%;padding:1rem;font-size:0.85rem;
+      justify-content:center;
+    }
+
+    /* Phase 2 note banner */
+    .phase2-note {
+      background:rgba(99,179,237,0.06);border:1px solid rgba(99,179,237,0.18);
+      border-radius:10px;padding:0.85rem 1.1rem;
+      font-size:0.76rem;color:var(--clr-text-muted);line-height:1.7;
+      margin-bottom:1.75rem;
+    }
+    .phase2-note strong { color:var(--clr-accent-cyan); }
+
+    /* Success toast (shown on submit) */
+    .toast-wrap {
+      position:fixed;bottom:2rem;right:2rem;z-index:2000;
+      transform:translateY(120%);opacity:0;
+      transition:all 0.5s var(--ease-out);
+    }
+    .toast-wrap.show { transform:translateY(0);opacity:1; }
+    .toast-inner {
+      background:rgba(13,16,33,0.95);border:1px solid rgba(79,209,197,0.30);
+      border-radius:12px;padding:1rem 1.4rem;
+      display:flex;align-items:center;gap:0.85rem;
+      box-shadow:0 8px 32px rgba(0,0,0,0.50);
+      backdrop-filter:blur(16px);
+    }
+    .toast-icon { font-size:1.4rem; }
+    .toast-text { font-size:0.80rem;color:var(--clr-text-primary);line-height:1.6; }
+    .toast-text strong { color:var(--clr-accent-teal); }
+
+    /* ── Info sidebar ────────────────────────────────────────── */
+    .info-section-title {
+      font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.4rem;
+    }
+
+    .contact-method {
+      display:flex;align-items:flex-start;gap:1rem;
+      padding:1.25rem;border-radius:12px;
+      background:var(--clr-surface);border:var(--glass-border);
+      margin-bottom:1rem;
+      transition:all var(--transition-fast);
+      text-decoration:none;
+    }
+    .contact-method:hover {
+      background:var(--clr-surface-hover);border-color:rgba(99,179,237,0.25);
+      transform:translateX(4px);
+    }
+    .contact-method .icon {
+      width:40px;height:40px;border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.1rem;flex-shrink:0;
+    }
+    .icon-cyan   { background:rgba(99,179,237,0.12);color:var(--clr-accent-cyan); }
+    .icon-violet { background:rgba(159,122,234,0.12);color:var(--clr-accent-violet); }
+    .icon-teal   { background:rgba(79,209,197,0.12);color:var(--clr-accent-teal); }
+    .icon-warm   { background:rgba(251,182,206,0.12);color:var(--clr-accent-warm); }
+
+    .contact-method .label { font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--clr-text-dimmed);margin-bottom:0.2rem; }
+    .contact-method .value { font-size:0.84rem;color:var(--clr-text-primary);font-family:'DM Mono',monospace; }
+
+    /* Availability card */
+    .avail-card {
+      padding:1.5rem;
+      background:linear-gradient(135deg,rgba(79,209,197,0.06),rgba(99,179,237,0.04));
+      border:1px solid rgba(79,209,197,0.20);
+    }
+    .avail-dot {
+      width:8px;height:8px;border-radius:50%;background:#28c840;
+      display:inline-block;margin-right:0.5rem;
+      animation:pulse-dot 2.5s infinite;
+    }
+    .avail-status { font-size:0.72rem;letter-spacing:0.10em;text-transform:uppercase;color:var(--clr-accent-teal);margin-bottom:0.5rem; }
+    .avail-detail { font-size:0.78rem;color:var(--clr-text-muted);line-height:1.75; }
+
+    /* Time zone info */
+    .tz-card { padding:1.25rem; }
+    .tz-row  { display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;border-bottom:1px solid var(--clr-border); }
+    .tz-row:last-child { border-bottom:none; }
+    .tz-label { font-size:0.75rem;color:var(--clr-text-muted); }
+    .tz-val   { font-size:0.75rem;color:var(--clr-text-primary);font-family:'DM Mono',monospace; }
+
+    /* ── FAQ ─────────────────────────────────────────────────── */
+    .faq-item {
+      border-bottom:1px solid var(--clr-border);
+      padding:1.25rem 0;
+    }
+    .faq-item:first-child { padding-top:0; }
+    .faq-q {
+      font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;
+      cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;
+      user-select:none;
+    }
+    .faq-q .bi { font-size:0.9rem;color:var(--clr-accent-cyan);transition:transform var(--transition-fast); }
+    .faq-q.open .bi { transform:rotate(45deg); }
+    .faq-a {
+      font-size:0.80rem;color:var(--clr-text-muted);line-height:1.85;
+      max-height:0;overflow:hidden;transition:max-height 0.4s var(--ease-out),padding 0.3s;
+    }
+    .faq-a.open { max-height:300px;padding-top:0.75rem; }
+
+    @media(max-width:992px){
+      .form-card { padding:1.75rem; }
+    }
+  </style>
+</head>
+<script src="assets/js/chatbot.js"></script>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar" aria-label="Main navigation">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a href="index.html" class="nav-brand">Mouhyadine</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><i class="bi bi-list"></i></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="portfolio-details.html">Projects</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="contact.html" class="btn-primary-glow ms-2" style="padding:0.4rem 1.2rem;font-size:0.72rem;"><i class="bi bi-arrow-right-circle"></i> Hire Me</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="orb page-header-orb"></div>
+  <div class="container position-relative z-1">
+    <p class="display-mono section-label justify-content-center fade-up delay-1">Get in Touch</p>
+    <h1 class="fade-up delay-2">Let's <span class="text-gradient">work together.</span></h1>
+    <p class="fade-up delay-3">
+      Have a project in mind, a question, or just want to connect?
+      Send me a message — I respond within 24 hours.
+    </p>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<!-- CONTACT SECTION -->
+<section aria-label="Contact form and information">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- ── LEFT: Contact Form ── -->
+      <div class="col-lg-7 reveal">
+        <div class="glass-card form-card">
+
+          <h2 style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:1.75rem;">
+            Send a Message
+          </h2>
+
+          <form id="contactForm" novalidate>
+
+            <div class="row g-3 mb-3">
+              <div class="col-sm-6">
+                <label class="form-label" for="inputName">Full Name *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputName"
+                  placeholder="Jane Smith"
+                  required
+                  autocomplete="name"
+                />
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="inputEmail">Email Address *</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="inputEmail"
+                  placeholder="jane@example.com"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="inputSubject">Subject *</label>
+              <select class="form-select" id="inputSubject" required>
+                <option value="" disabled selected>Select a topic…</option>
+                <option value="fullstack">Full-Stack Web Development</option>
+                <option value="python">Python Scripting / Automation</option>
+                <option value="api">API Design / Integration</option>
+                <option value="matlab">MATLAB / Numerical Work</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="inputBudget">Estimated Budget (Optional)</label>
+              <select class="form-select" id="inputBudget">
+                <option value="" disabled selected>Select a range…</option>
+                <option value="lt200">Under $200</option>
+                <option value="200-500">$200 – $500</option>
+                <option value="500-1000">$500 – $1,000</option>
+                <option value="gt1000">$1,000+</option>
+                <option value="discuss">Let's discuss</option>
+              </select>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label" for="inputMessage">Message *</label>
+              <textarea
+                class="form-control"
+                id="inputMessage"
+                placeholder="Describe your project, your deadline, and what you need from me…"
+                maxlength="1000"
+                required
+              ></textarea>
+              <div class="char-count"><span id="charCount">0</span> / 1000</div>
+            </div>
+
+            <button type="submit" class="btn-primary-glow btn-submit">
+              <i class="bi bi-send-fill"></i> Send Message
+            </button>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- ── RIGHT: Info sidebar ── -->
+      <div class="col-lg-5">
+
+        <!-- Availability card -->
+        <div class="glass-card avail-card mb-4 reveal reveal-delay-1">
+          <div class="avail-status">
+            <span class="avail-dot"></span>Available for Work
+          </div>
+          <p class="avail-detail">
+            I am currently accepting freelance projects.
+            My capacity is limited — I prioritise quality over volume,
+            so please reach out early to secure a slot.
+          </p>
+        </div>
+
+        <!-- Contact methods -->
+        <div class="mb-4 reveal reveal-delay-1">
+          <div class="info-section-title mb-3">Direct Contact</div>
+
+          <a href="mailto:contact@mouhya01.dev" class="contact-method d-block">
+            <div class="icon icon-cyan"><i class="bi bi-envelope-fill"></i></div>
+            <div>
+              <div class="label">Email</div>
+              <div class="value">mouhyadine.zakaria.djama@gmail.com</div>
+            </div>
+          </a>
+
+          <a href="https://github.com/Mouhya01" target="_blank" rel="noopener" class="contact-method d-block">
+            <div class="icon icon-violet"><i class="bi bi-github"></i></div>
+            <div>
+              <div class="label">GitHub</div>
+              <div class="value">github.com/Mouhya01</div>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/in/mouhyadine-zakaria-b2b571366/" target="_blank" rel="noopener" class="contact-method d-block">
+            <div class="icon icon-teal"><i class="bi bi-linkedin"></i></div>
+            <div>
+              <div class="label">LinkedIn</div>
+              <div class="value">linkedin.com/in/mouhya</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Time zone card -->
+        <div class="glass-card tz-card mb-4 reveal reveal-delay-2">
+          <div class="info-section-title mb-3">
+            <i class="bi bi-clock me-2" style="color:var(--clr-accent-cyan)"></i>Time Zone &amp; Location
+          </div>
+          <div class="tz-row">
+            <span class="tz-label">📍 Location</span>
+            <span class="tz-val">Djibouti City, DJ</span>
+          </div>
+          <div class="tz-row">
+            <span class="tz-label">🕐 Time Zone</span>
+            <span class="tz-val">EAT — UTC+3</span>
+          </div>
+          <div class="tz-row">
+            <span class="tz-label">⏰ Working Hours</span>
+            <span class="tz-val">08:00 – 22:00 EAT</span>
+          </div>
+          <div class="tz-row">
+            <span class="tz-label">💬 Languages</span>
+            <span class="tz-val">EN · FR </span>
+          </div>
+          <div class="tz-row">
+            <span class="tz-label">⚡ Response Time</span>
+            <span class="tz-val">&lt; 24 hours</span>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /row -->
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ SECTION -->
+<section aria-label="Frequently asked questions">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <p class="display-mono section-label reveal">FAQ</p>
+        <h2 class="section-title reveal reveal-delay-1 mb-5">
+          Common <span class="text-gradient">questions.</span>
+        </h2>
+
+        <div class="faq-item reveal reveal-delay-1">
+          <div class="faq-q" tabindex="0">
+            What types of projects do you take on?
+            <i class="bi bi-plus-circle-fill"></i>
+          </div>
+          <div class="faq-a">
+            I specialise in Full-Stack web development (React + Node.js), Python scripting
+            and automation, REST API design, and numerical/engineering computation (MATLAB/Python).
+            I am happy to discuss any project in those domains — regardless of size.
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-2">
+          <div class="faq-q" tabindex="0">
+            Are you available before May 2026?
+            <i class="bi bi-plus-circle-fill"></i>
+          </div>
+          <div class="faq-a">
+            My full freelance launch is planned for May 2026 to coincide with completing my
+            current semester. However, I can accommodate small projects or consultations
+            before that date — please reach out and let me know your timeline.
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-3">
+          <div class="faq-q" tabindex="0">
+            What is your typical project workflow?
+            <i class="bi bi-plus-circle-fill"></i>
+          </div>
+          <div class="faq-a">
+            My standard workflow: (1) Brief — understanding your goals and constraints.
+            (2) Proposal — scope, timeline and cost estimate.
+            (3) Development — iterative with regular updates.
+            (4) Review — your feedback integrated before final delivery.
+            (5) Handoff — clean code, documentation and optional post-launch support.
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-4">
+          <div class="faq-q" tabindex="0">
+            Do you work with clients outside Djibouti?
+            <i class="bi bi-plus-circle-fill"></i>
+          </div>
+          <div class="faq-a">
+            Absolutely — I work fully remote and communicate in English, French and Arabic.
+            My time zone (EAT, UTC+3) overlaps well with Europe, the Middle East,
+            and East Africa. I use standard platforms (Upwork, Fiverr, GitHub, Notion)
+            to keep collaboration smooth regardless of location.
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-q" tabindex="0">
+            How is payment handled?
+            <i class="bi bi-plus-circle-fill"></i>
+          </div>
+          <div class="faq-a">
+            For Upwork and Fiverr projects, payment is secured through the platform's
+            escrow system — safe for both parties. For direct contracts, I require a
+            50% deposit before work begins, with the remainder due upon delivery.
+            I accept PayPal, Wise and platform credits.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer aria-label="Site footer">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+      <div>
+        <div class="footer-brand mb-1">Mouhyadine</div>
+        <p class="footer-copy">© 2026 — Designed &amp; coded with rigour from Djibouti 🇩🇯</p>
+      </div>
+      <div class="footer-social d-flex gap-2">
+        <a href="https://github.com/Mouhya01"    target="_blank" rel="noopener" aria-label="GitHub"><i class="bi bi-github"></i></a>
+        <a href="https://www.linkedin.com/in/mouhyadine-zakaria-b2b571366/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- SUCCESS TOAST -->
+<div class="toast-wrap" id="successToast" role="alert" aria-live="polite">
+  <div class="toast-inner">
+    <span class="toast-icon">✅</span>
+    <div class="toast-text">
+      <strong>Message noted!</strong><br>
+      The form is currently static — please email me directly<br>at contact@mouhya01.dev
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  /* ── Character counter for textarea ──────────────────────── */
+  const msgField  = document.getElementById('inputMessage');
+  const charCount = document.getElementById('charCount');
+  if (msgField && charCount) {
+    msgField.addEventListener('input', () => {
+      charCount.textContent = msgField.value.length;
+    });
+  }
+
+ 
+  const form  = document.getElementById('contactForm');
+  const toast = document.getElementById('successToast');
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      /* Basic HTML5 validation feedback */
+      if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        return;
+      }
+
+      /* Show success toast */
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 5000);
+
+      /* Reset form */
+      form.reset();
+      form.classList.remove('was-validated');
+      if (charCount) charCount.textContent = '0';
+    });
+  }
+
+  /* ── FAQ accordion ───────────────────────────────────────── */
+  document.querySelectorAll('.faq-q').forEach(q => {
+    function toggle() {
+      const answer = q.nextElementSibling;
+      const isOpen = answer.classList.contains('open');
+
+      /* Close all */
+      document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+      document.querySelectorAll('.faq-q').forEach(x => x.classList.remove('open'));
+
+      /* Open clicked if it was closed */
+      if (!isOpen) {
+        answer.classList.add('open');
+        q.classList.add('open');
+      }
+    }
+
+    q.addEventListener('click', toggle);
+    q.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+</script>
+</body>
+</html>
