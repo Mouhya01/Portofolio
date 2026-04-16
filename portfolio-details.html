@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mouhya01 Projects — Real GitHub projects: Ecological Footprint, Expense Calculator, API E-commerce." />
+  <title>Projects | Mouhyadine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+    .page-header { padding:10rem 0 4rem; position:relative; overflow:hidden; text-align:center; }
+    .page-header-orb { width:600px;height:400px; background:radial-gradient(ellipse,rgba(99,179,237,0.10) 0%,transparent 70%); top:-80px;left:50%;transform:translateX(-50%); }
+    .page-header h1 { font-size:clamp(2.8rem,6vw,4.5rem);font-weight:800;line-height:1.1; }
+    .page-header p  { font-size:0.88rem;color:var(--clr-text-muted);max-width:500px;margin:1rem auto 0;line-height:1.85; }
+
+    .filter-bar { display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;margin-bottom:3rem; }
+    .filter-btn {
+      padding:0.4rem 1.1rem;border-radius:var(--radius-pill);
+      background:var(--clr-surface);border:var(--glass-border);
+      color:var(--clr-text-muted);font-size:0.75rem;font-family:'DM Mono',monospace;
+      letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;
+      transition:all var(--transition-fast);
+    }
+    .filter-btn:hover,.filter-btn.active {
+      background:rgba(99,179,237,0.10);border-color:rgba(99,179,237,0.30);color:var(--clr-accent-cyan);
+    }
+
+    .proj-card { overflow:hidden;cursor:pointer;padding:0; }
+    .proj-thumb {
+      height:200px;position:relative;overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .proj-thumb-num { font-family:'Syne',sans-serif;font-size:6rem;font-weight:800;opacity:0.08;color:#fff;position:absolute;user-select:none; }
+    .proj-thumb-icon { font-size:3.5rem;position:relative;z-index:1;filter:drop-shadow(0 4px 20px rgba(0,0,0,0.4)); }
+    .proj-thumb-overlay { position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(7,8,15,0.95)); }
+    .thumb-green  { background:linear-gradient(135deg,rgba(72,187,120,0.30),rgba(56,161,105,0.15)); }
+    .thumb-orange { background:linear-gradient(135deg,rgba(237,137,54,0.30),rgba(221,107,32,0.15)); }
+    .thumb-cyan   { background:linear-gradient(135deg,rgba(99,179,237,0.30),rgba(159,122,234,0.20)); }
+
+    .proj-body  { padding:1.75rem; }
+    .proj-cat   { font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.4rem; }
+    .proj-name  { font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:0.5rem; }
+    .proj-blurb { font-size:0.80rem;color:var(--clr-text-muted);line-height:1.75;margin-bottom:1.2rem; }
+    .proj-stack { display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:1.2rem; }
+    .proj-more  { display:inline-flex;align-items:center;gap:0.4rem;font-size:0.73rem;color:var(--clr-accent-cyan);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:gap var(--transition-fast); }
+    .proj-more:hover { gap:0.7rem;color:var(--clr-accent-cyan); }
+
+    .status-badge { display:inline-flex;align-items:center;gap:0.4rem;font-size:0.60rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.18rem 0.6rem;border-radius:4px;margin-bottom:0.9rem; }
+    .status-complete { background:rgba(72,187,120,0.12);color:#68d391;border:1px solid rgba(72,187,120,0.25); }
+    .status-progress { background:rgba(237,137,54,0.12);color:#f6ad55;border:1px solid rgba(237,137,54,0.25); }
+    .status-dot { width:5px;height:5px;border-radius:50%;background:currentColor;animation:pulse-dot 2s infinite; }
+
+    .stats-bar { background:rgba(13,16,33,0.40);border-top:1px solid var(--clr-border);border-bottom:1px solid var(--clr-border);padding:2.5rem 0;margin-bottom:4rem; }
+    .stat-num  { font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block; }
+    .stat-lbl  { font-size:0.68rem;color:var(--clr-text-dimmed);text-transform:uppercase;letter-spacing:0.10em; }
+
+    /* Modal */
+    .modal-content { background:rgba(10,12,25,0.97);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-glass);color:var(--clr-text-primary);backdrop-filter:blur(24px); }
+    .modal-header { border-bottom:1px solid var(--clr-border);padding:1.5rem 2rem; }
+    .modal-body   { padding:2rem; }
+    .modal-footer { border-top:1px solid var(--clr-border);padding:1.2rem 2rem; }
+    .btn-close    { filter:invert(1) brightness(0.6); }
+
+    .modal-thumb { height:140px;position:relative;overflow:hidden;border-radius:var(--radius-glass) var(--radius-glass) 0 0;display:flex;align-items:center;justify-content:center; }
+    .modal-thumb-emoji { font-size:3rem;position:relative;z-index:1; }
+    .modal-thumb-overlay { position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(10,12,25,0.98)); }
+
+    .ocs-block { margin-bottom:2rem; }
+    .ocs-label { display:inline-flex;align-items:center;gap:0.5rem;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.2rem 0.7rem;border-radius:4px;margin-bottom:0.65rem; }
+    .ocs-overview  { color:var(--clr-accent-cyan);  background:rgba(99,179,237,0.08); border:1px solid rgba(99,179,237,0.20);  }
+    .ocs-challenge { color:#f6ad55;                 background:rgba(237,137,54,0.08); border:1px solid rgba(237,137,54,0.20);  }
+    .ocs-solution  { color:var(--clr-accent-teal);  background:rgba(79,209,197,0.08); border:1px solid rgba(79,209,197,0.20);  }
+    .ocs-outcome   { color:var(--clr-accent-violet);background:rgba(159,122,234,0.08);border:1px solid rgba(159,122,234,0.20); }
+    .ocs-block h5  { font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.5rem; }
+    .ocs-block p   { font-size:0.82rem;color:var(--clr-text-muted);line-height:1.85; }
+    .ocs-block code { background:rgba(255,255,255,0.06);border-radius:4px;padding:0.1em 0.4em;font-size:0.85em;color:var(--clr-accent-cyan); }
+
+    .outcome-metrics { display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem; }
+    .metric-pill { background:rgba(79,209,197,0.07);border:1px solid rgba(79,209,197,0.18);border-radius:8px;padding:0.6rem 1rem;font-size:0.75rem; }
+    .metric-pill strong { color:var(--clr-accent-teal);font-family:'Syne',sans-serif;font-size:1.05rem;display:block; }
+
+    .github-link { display:inline-flex;align-items:center;gap:0.5rem;font-size:0.78rem;color:var(--clr-text-primary);text-decoration:none;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:8px;padding:0.5rem 1rem;transition:all var(--transition-fast); }
+    .github-link:hover { background:rgba(255,255,255,0.10);border-color:rgba(99,179,237,0.30);color:var(--clr-accent-cyan); }
+
+    @media(max-width:768px){ .modal-body{padding:1.25rem;} .modal-header{padding:1.25rem;} }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar" aria-label="Main navigation">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a href="index.html" class="nav-brand">Mouhyadine</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><i class="bi bi-list"></i></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="portfolio-details.html" class="active">Projects</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html" class="btn-primary-glow ms-2" style="padding:0.4rem 1.2rem;font-size:0.72rem;"><i class="bi bi-arrow-right-circle"></i> Hire Me</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="orb page-header-orb"></div>
+  <div class="container position-relative" style="z-index:1;">
+    <p class="display-mono section-label justify-content-center fade-up delay-1">GitHub Projects</p>
+    <h1 class="fade-up delay-2">Real work,<br><span class="text-gradient">real code.</span></h1>
+    <p class="fade-up delay-3">Three projects built from scratch — each solving a genuine problem, each publicly available on GitHub.</p>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="row g-3 text-center">
+      <div class="col-4 reveal"><span class="stat-num">3</span><span class="stat-lbl">GitHub Projects</span></div>
+      <div class="col-4 reveal reveal-delay-1"><span class="stat-num">3</span><span class="stat-lbl">Tech Stacks</span></div>
+      <div class="col-4 reveal reveal-delay-2"><span class="stat-num">100%</span><span class="stat-lbl">Open Source</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section style="padding-top:0;" aria-label="Projects">
+  <div class="container">
+
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="frontend">Front-End</button>
+      <button class="filter-btn" data-filter="backend">Back-End</button>
+      <button class="filter-btn" data-filter="fullstack">Full-Stack</button>
+    </div>
+
+    <div class="row g-4" id="projectsGrid">
+
+      <!-- PROJECT 01 -->
+      <div class="col-lg-4 col-md-6 reveal reveal-delay-1" data-category="frontend">
+        <div class="glass-card proj-card h-100" data-bs-toggle="modal" data-bs-target="#modal01">
+          <div class="proj-thumb thumb-green">
+            <span class="proj-thumb-num">01</span>
+            <span class="proj-thumb-icon">🌍</span>
+            <div class="proj-thumb-overlay"></div>
+          </div>
+          <div class="proj-body d-flex flex-column">
+            <p class="proj-cat" style="color:#68d391;">Front-End · Vanilla JS</p>
+            <div class="status-badge status-complete"><span class="status-dot"></span> Functional</div>
+            <h3 class="proj-name">Ecological Footprint Calculator</h3>
+            <p class="proj-blurb">Interactive tool that computes your real environmental impact across multiple lifestyle factors and returns a score in "number of Earths".</p>
+            <div class="proj-stack">
+              <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span>
+            </div>
+            <div class="mt-auto"><span class="proj-more">Case Study <i class="bi bi-arrow-right"></i></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 02 -->
+      <div class="col-lg-4 col-md-6 reveal reveal-delay-2" data-category="frontend">
+        <div class="glass-card proj-card h-100" data-bs-toggle="modal" data-bs-target="#modal02">
+          <div class="proj-thumb thumb-orange">
+            <span class="proj-thumb-num">02</span>
+            <span class="proj-thumb-icon">📊</span>
+            <div class="proj-thumb-overlay"></div>
+          </div>
+          <div class="proj-body d-flex flex-column">
+            <p class="proj-cat" style="color:#f6ad55;">Front-End · Chart.js</p>
+            <div class="status-badge status-complete"><span class="status-dot"></span> Functional</div>
+            <h3 class="proj-name">Expense Calculator</h3>
+            <p class="proj-blurb">Monthly budget tracker that logs expenses by category, computes remaining balance from initial income, and renders a live pie chart via Chart.js.</p>
+            <div class="proj-stack">
+              <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">Advanced JS</span><span class="tag">Chart.js</span>
+            </div>
+            <div class="mt-auto"><span class="proj-more">Case Study <i class="bi bi-arrow-right"></i></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 03 -->
+      <div class="col-lg-4 col-md-6 reveal reveal-delay-3" data-category="backend">
+        <div class="glass-card proj-card h-100" data-bs-toggle="modal" data-bs-target="#modal03">
+          <div class="proj-thumb thumb-cyan">
+            <span class="proj-thumb-num">03</span>
+            <span class="proj-thumb-icon">🛒</span>
+            <div class="proj-thumb-overlay"></div>
+          </div>
+          <div class="proj-body d-flex flex-column">
+            <p class="proj-cat" style="color:var(--clr-accent-cyan);">Back-End · Node.js</p>
+            <div class="status-badge status-progress"><span class="status-dot"></span> In Progress</div>
+            <h3 class="proj-name">API E-commerce</h3>
+            <p class="proj-blurb">Production-grade RESTful API for e-commerce — full CRUD on products, users and orders, built with Node.js, Express and MongoDB. Tested on Postman.</p>
+            <div class="proj-stack">
+              <span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">Mongoose</span><span class="tag">MongoDB</span><span class="tag">REST</span>
+            </div>
+            <div class="mt-auto"><span class="proj-more">Case Study <i class="bi bi-arrow-right"></i></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div id="emptyState" class="text-center py-5 d-none">
+      <span style="font-size:2.5rem">🔍</span>
+      <p class="mt-3" style="color:var(--clr-text-muted);">No projects in this category yet — more coming soon.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ MODALS ================================================================ -->
+
+<!-- MODAL 01 — Ecological Footprint -->
+<div class="modal fade" id="modal01" tabindex="-1" aria-labelledby="m01Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-thumb thumb-green"><span class="modal-thumb-emoji">🌍</span><div class="modal-thumb-overlay"></div></div>
+      <div class="modal-header">
+        <div>
+          <p style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:#68d391;margin-bottom:0.25rem;">Front-End · HTML · CSS · JavaScript</p>
+          <h2 class="modal-title" id="m01Label" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;">Ecological Footprint Calculator</h2>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="ocs-block">
+          <div class="ocs-label ocs-overview"><i class="bi bi-binoculars-fill"></i> Overview</div>
+          <h5>A web tool that measures your real environmental impact</h5>
+          <p>This project is an interactive web application that calculates a user's <strong style="color:var(--clr-text-primary)">ecological footprint</strong> — the total environmental burden of their daily lifestyle. The user answers questions across multiple categories (transport, diet, home energy, consumer habits) and the app computes a score expressed in "number of Earths" needed if everyone lived the same way. The result is displayed with contextual feedback to encourage behaviour change.</p>
+        </div>
+        <div class="ocs-block">
+          <div class="ocs-label ocs-challenge"><i class="bi bi-exclamation-triangle-fill"></i> Challenge</div>
+          <h5>Translating real environmental data into accurate JavaScript calculations</h5>
+          <p>The core difficulty was the <strong style="color:var(--clr-text-primary)">JavaScript calculation logic</strong>. Ecological footprint formulas involve multiple weighted variables — each factor (weekly km by car, meat frequency, electricity source, purchases) contributes differently to the final score. Designing a formula that is both scientifically grounded and simple enough for non-experts required significant research and iterative testing of the weighting system.</p>
+        </div>
+        <div class="ocs-block">
+          <div class="ocs-label ocs-solution"><i class="bi bi-lightbulb-fill"></i> Solution</div>
+          <h5>Modular scoring functions with weighted factor accumulation</h5>
+          <p>Each category is implemented as a separate JavaScript function returning a partial score. All partial scores are accumulated and normalised against a global average baseline to produce the final result. The UI uses a step-by-step form approach so the user is never overwhelmed. Vanilla JavaScript handles all DOM manipulation and event listening — no external framework was needed.</p>
+        </div>
+        <div class="ocs-block">
+          <div class="ocs-label ocs-outcome"><i class="bi bi-bar-chart-fill"></i> Outcome</div>
+          <h5>A fully functional calculator tested on real data</h5>
+          <p>The application was tested with real personal data and returned a coherent, meaningful result. This project demonstrates DOM manipulation, multi-step UI design, mathematical modelling in JavaScript, and working with weighted scoring systems — all without any framework.</p>
+          <div class="outcome-metrics">
+            <div class="metric-pill"><strong>100%</strong> Vanilla JS</div>
+            <div class="metric-pill"><strong>Multi-factor</strong> Scoring engine</div>
+            <div class="metric-pill"><strong>✓ Tested</strong> Real personal data</div>
+          </div>
+        </div>
+        <div><p style="font-size:0.78rem;color:var(--clr-text-muted);margin-bottom:0.75rem;">Stack used:</p>
+          <div class="d-flex flex-wrap gap-2"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript ES6+</span></div>
+        </div>
+      </div>
+      <div class="modal-footer d-flex gap-2 flex-wrap">
+        <a href="https://github.com/Mouhya01/Ecological-Footprint" target="_blank" rel="noopener" class="github-link"><i class="bi bi-github"></i> github.com/Mouhya01/Ecological-Footprint</a>
+        <button type="button" class="btn-glass" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 02 — Expense Calculator -->
+<div class="modal fade" id="modal02" tabindex="-1" aria-labelledby="m02Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-thumb thumb-orange"><span class="modal-thumb-emoji">📊</span><div class="modal-thumb-overlay"></div></div>
+      <div class="modal-header">
+        <div>
+          <p style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:#f6ad55;margin-bottom:0.25rem;">Front-End · JavaScript · Chart.js</p>
+          <h2 class="modal-title" id="m02Label" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;">Expense Calculator</h2>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="ocs-block">
+          <div class="ocs-label ocs-overview"><i class="bi bi-binoculars-fill"></i> Overview</div>
+          <h5>A monthly budget manager with live visual breakdown</h5>
+          <p>This application helps users understand and control their monthly spending. The user inputs their <strong style="color:var(--clr-text-primary)">initial income</strong>, then logs individual expenses by category (rent, food, transport, leisure…). The app computes total spent, remaining balance, and renders a <strong style="color:var(--clr-text-primary)">dynamic pie chart</strong> using Chart.js that updates in real time as expenses are added or removed.</p>
+        </div>
+        <div class="ocs-block">
+          <div class="ocs-label ocs-challenge"><i class="bi bi-exclamation-triangle-fill"></i> Challenge</div>
+          <h5>Integrating Chart.js and handling live reactive data</h5>
+          <p>The main challenge was correctly implementing <strong style="color:var(--clr-text-primary)">Chart.js</strong> as a third-party library — reading and applying its documentation, then making the chart update reactively every time the expense list changed. The key constraint was updating the chart <em>without</em> re-rendering it completely, which would cause a visual flash and destroy the animation.</p>
+        </div>
+        <div class="ocs-block">
+          <div class="ocs-label ocs-solution"><i class="bi bi-lightbulb-fill"></i> Solution</div>
+          <h5>Dataset mutation + Chart.js .update() for smooth transitions</h5>
+          <p>Expenses are stored in a JavaScript array of objects <code>{category, amount}</code>. On each change, the chart's <code>data.labels</code> and <code>data.datasets[0].data</code> arrays are rebuilt from the expense array, then <code>chart.update()</code> is called — Chart.js handles the animated transition between states. A running total counter updates simultaneously via direct DOM manipulation.</p>
+        </div>
+        <div class="ocs-block">
+          <div class="ocs-label ocs-outcome"><i class="bi bi-bar-chart-fill"></i> Outcome</div>
+          <h5>Working budget tool validated with real monthly expenses</h5>
+          <p>The application was successfully used to calculate and visualise real personal monthly expenses. This project demonstrates third-party library integration, reactive data management, and data visualisation — skills directly applicable to dashboard development in client projects.</p>
+          <div class="outcome-metrics">
+            <div class="metric-pill"><strong>Real-time</strong> Chart updates</div>
+            <div class="metric-pill"><strong>Chart.js</strong> Integration</div>
+            <div class="metric-pill"><strong>✓ Validated</strong> Real data</div>
+          </div>
+        </div>
+        <div><p style="font-size:0.78rem;color:var(--clr-text-muted);margin-bottom:0.75rem;">Stack used:</p>
+          <div class="d-flex flex-wrap gap-2"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">Advanced JavaScript</span><span class="tag">Chart.js</span></div>
+        </div>
+      </div>
+      <div class="modal-footer d-flex gap-2 flex-wrap">
+        <a href="https://github.com/Mouhya01/Expense-calculator" target="_blank" rel="noopener" class="github-link"><i class="bi bi-github"></i> github.com/Mouhya01/Expense-calculator</a>
+        <button type="button" class="btn-glass" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 03 — API E-commerce -->
+<div class="modal fade" id="modal03" tabindex="-1" aria-labelledby="m03Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-thumb thumb-cyan"><span class="modal-thumb-emoji">🛒</span><div class="modal-thumb-overlay"></div></div>
+      <div class="modal-header">
+        <div>
+          <p style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--clr-accent-cyan);margin-bottom:0.25rem;">Back-End · Node.js · Express · MongoDB</p>
+          <h2 class="modal-title" id="m03Label" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;">API E-commerce</h2>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div style="background:rgba(237,137,54,0.08);border:1px solid rgba(237,137,54,0.22);border-radius:8px;padding:0.75rem 1rem;margin-bottom:1.5rem;font-size:0.76rem;color:#f6ad55;font-family:'DM Mono',monospace;">
+          🔧 <strong>Active development</strong> — Core API is functional and Postman-tested. Improvements in progress.
+        </div>
+        <div class="ocs-block">
+          <div class="ocs-label ocs-overview"><i class="bi bi-binoculars-fill"></i> Overview</div>
+          <h5>A production-grade RESTful API for e-commerce back-end management</h5>
+          <p>This is the most technically ambitious project to date — a complete <strong style="color:var(--clr-text-primary)">back-end REST API</strong> for an e-commerce platform. It exposes endpoints covering the full CRUD lifecycle (Create, Read, Update, Delete) for products, users and orders. Built with <strong style="color:var(--clr-text-primary)">Node.js and Express</strong> for the server layer, and <strong style="color:var(--clr-text-primary)">MongoDB via Mongoose</strong> for data persistence. Designed to serve as the back-end for any front-end shopping interface.</p>
+        </div>
+        <div class="ocs-block">
+          <div class="ocs-label ocs-challenge"><i class="bi bi-exclamation-triangle-fill"></i> Challenge</div>
+          <h5>Route architecture and Mongoose data modelling</h5>
+          <p>Two main challenges emerged. First, structuring the <strong style="color:var(--clr-text-primary)">API route architecture</strong> cleanly using the MVC pattern — separating routes, controllers and models so the codebase stays maintainable. Second, designing <strong style="color:var(--clr-text-primary)">Mongoose schemas</strong> correctly — particularly the relationships between collections (users → orders → products) and handling MongoDB's document model, which differs significantly from relational SQL databases.</p>
+        </div>
+        <div class="ocs-block">
+          <div class="ocs-label ocs-solution"><i class="bi bi-lightbulb-fill"></i> Solution</div>
+          <h5>MVC architecture with Express Router + Mongoose ODM</h5>
+          <p>The project follows the <strong style="color:var(--clr-text-primary)">MVC pattern</strong>: <code>models/</code> define Mongoose schemas, <code>controllers/</code> handle business logic, and <code>routes/</code> map HTTP verbs to controller functions via Express Router. Each resource (product, user, order) has its own dedicated route file. Mongoose's <code>populate()</code> method resolves cross-collection references for nested data retrieval.</p>
+        </div>
+        <div class="ocs-block">
+          <div class="ocs-label ocs-outcome"><i class="bi bi-bar-chart-fill"></i> Outcome</div>
+          <h5>All core routes validated on Postman — improvements ongoing</h5>
+          <p>All primary routes (GET, POST, PUT, DELETE) for products and users have been validated using <strong style="color:var(--clr-text-primary)">Postman</strong>. The API returns correct JSON responses and appropriate HTTP status codes. Currently being extended with JWT authentication middleware and input validation layers.</p>
+          <div class="outcome-metrics">
+            <div class="metric-pill"><strong>MVC</strong> Architecture</div>
+            <div class="metric-pill"><strong>Postman</strong> Validated</div>
+            <div class="metric-pill"><strong>CRUD</strong> Full coverage</div>
+            <div class="metric-pill"><strong>REST</strong> Conventions</div>
+          </div>
+        </div>
+        <div><p style="font-size:0.78rem;color:var(--clr-text-muted);margin-bottom:0.75rem;">Stack used:</p>
+          <div class="d-flex flex-wrap gap-2"><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">Mongoose</span><span class="tag">MongoDB</span><span class="tag">REST API</span><span class="tag">Postman</span><span class="tag">Git</span></div>
+        </div>
+      </div>
+      <div class="modal-footer d-flex gap-2 flex-wrap">
+        <a href="https://github.com/Mouhya01/API-ecommerce" target="_blank" rel="noopener" class="github-link"><i class="bi bi-github"></i> github.com/Mouhya01/API-ecommerce</a>
+        <button type="button" class="btn-glass" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section style="padding:5rem 0;" aria-label="Call to action">
+  <div class="container">
+    <div class="glass-card reveal" style="padding:3rem;text-align:center;position:relative;overflow:hidden;">
+      <div style="position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(99,179,237,0.10),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;"></div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:0.75rem;position:relative;">Want to see more? <span class="text-gradient">Let's build together.</span></h2>
+      <p style="font-size:0.86rem;color:var(--clr-text-muted);max-width:440px;margin:0 auto 2rem;line-height:1.8;position:relative;">These projects are just the beginning. If you have an idea, I have the skills to build it.</p>
+      <div class="d-flex flex-wrap gap-3 justify-content-center" style="position:relative;">
+        <a href="contact.html" class="btn-primary-glow"><i class="bi bi-envelope-fill"></i> Start a Project</a>
+        <a href="https://github.com/Mouhya01" target="_blank" rel="noopener" class="btn-glass"><i class="bi bi-github"></i> GitHub Profile</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer aria-label="Site footer">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+      <div><div class="footer-brand mb-1">Mouhya01</div><p class="footer-copy">© 2026 — Designed &amp; coded with rigour from Djibouti 🇩🇯</p></div>
+      <div class="footer-social d-flex gap-2">
+        <a href="https://github.com/Mouhya01" target="_blank" rel="noopener" aria-label="GitHub"><i class="bi bi-github"></i></a>
+        <a href="https://www.linkedin.com/in/mouhyadine-zakaria-b2b571366/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a href="mouhyadine.zakaria.djama@gmail.com" aria-label="Email"><i class="bi bi-envelope-fill"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/chatbot.js"></script>
+<script>
+  const filterBtns   = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('#projectsGrid [data-category]');
+  const emptyState   = document.getElementById('emptyState');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      let visible = 0;
+      projectCards.forEach(card => {
+        const match = filter === 'all' || card.dataset.category === filter;
+        card.style.display = match ? '' : 'none';
+        if (match) visible++;
+      });
+      emptyState.classList.toggle('d-none', visible > 0);
+    });
+  });
+</script>
+</body>
+</html>
