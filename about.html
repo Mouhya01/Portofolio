@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Mouhya01 — Computer Engineering student, Full-Stack Developer, Djibouti." />
+  <title>About | Mouhyadine</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+
+  <style>
+    .page-header { padding:10rem 0 5rem; position:relative; overflow:hidden; text-align:center; }
+    .page-header-orb { width:500px;height:500px; background:radial-gradient(circle,rgba(159,122,234,0.12) 0%,transparent 70%); top:-100px;left:50%;transform:translateX(-50%); }
+    .page-header h1 { font-size:clamp(2.8rem,6vw,4.5rem);font-weight:800;line-height:1.1; }
+    .page-header p  { font-size:0.88rem;color:var(--clr-text-muted);max-width:520px;margin:1rem auto 0;line-height:1.85; }
+
+    .profile-intro-photo { width:220px;height:220px;border-radius:50%;border:2px solid rgba(255,255,255,0.08);background:var(--glass-bg);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;overflow:hidden;margin:0 auto;position:relative; }
+    .profile-intro-photo img { width:100%;height:100%;object-fit:cover;border-radius:50%;object-position:center 25%; }
+    .profile-intro-photo::after { content:'';position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(var(--clr-accent-cyan),var(--clr-accent-violet),var(--clr-accent-teal),var(--clr-accent-cyan));z-index:-1;animation:spin-ring 10s linear infinite;opacity:0.35;filter:blur(1px); }
+    @keyframes spin-ring { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+    .intro-name   { font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:0.3rem; }
+    .intro-role   { color:var(--clr-accent-cyan);font-size:0.82rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1.2rem; }
+    .intro-bio    { font-size:0.85rem;color:var(--clr-text-muted);line-height:1.85;max-width:560px; }
+
+    .info-pill { display:inline-flex;align-items:center;gap:0.5rem;background:var(--clr-surface);border:var(--glass-border);border-radius:var(--radius-pill);padding:0.35rem 0.9rem;font-size:0.72rem;color:var(--clr-text-muted);margin:0.25rem; }
+    .info-pill i { color:var(--clr-accent-cyan); }
+
+    .stats-row { padding:4rem 0;background:rgba(13,16,33,0.30);border-top:1px solid var(--clr-border);border-bottom:1px solid var(--clr-border); }
+    .stat-block { text-align:center; }
+    .stat-block .big { font-family:'Syne',sans-serif;font-size:clamp(2.5rem,5vw,3.5rem);font-weight:800;background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;line-height:1; }
+    .stat-block .lbl { font-size:0.75rem;color:var(--clr-text-muted);text-transform:uppercase;letter-spacing:0.10em;margin-top:0.5rem;display:block; }
+
+    .timeline { position:relative;padding-left:2.5rem; }
+    .timeline::before { content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--clr-accent-cyan),var(--clr-accent-violet),transparent);border-radius:2px; }
+    .tl-item { position:relative;margin-bottom:2.5rem; }
+    .tl-item:last-child { margin-bottom:0; }
+    .tl-dot { position:absolute;left:-2.5rem;top:0.3rem;width:14px;height:14px;border-radius:50%;background:var(--grad-accent);border:3px solid var(--clr-bg-deep);transform:translateX(-6px); }
+    .tl-date  { font-size:0.70rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--clr-accent-cyan);margin-bottom:0.3rem; }
+    .tl-title { font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:0.3rem; }
+    .tl-place { font-size:0.78rem;color:var(--clr-accent-violet);margin-bottom:0.5rem; }
+    .tl-desc  { font-size:0.80rem;color:var(--clr-text-muted);line-height:1.75; }
+
+    .skill-detail-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem; }
+    .skg-card  { padding:1.5rem;position:relative; }
+    .skg-icon  { font-size:1.6rem;margin-bottom:0.75rem;display:block; }
+    .skg-name  { font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.3rem; }
+    .skg-level { font-size:0.65rem;letter-spacing:0.10em;text-transform:uppercase;padding:0.15rem 0.6rem;border-radius:4px;display:inline-block;margin-bottom:0.75rem; }
+    .level-advanced     { background:rgba(99,179,237,0.12);color:var(--clr-accent-cyan);border:1px solid rgba(99,179,237,0.25); }
+    .level-intermediate { background:rgba(159,122,234,0.12);color:var(--clr-accent-violet);border:1px solid rgba(159,122,234,0.25); }
+    .level-familiar     { background:rgba(79,209,197,0.10);color:var(--clr-accent-teal);border:1px solid rgba(79,209,197,0.20); }
+
+    .soft-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem; }
+    .soft-card { padding:1.5rem;text-align:center; }
+    .soft-icon { font-size:2rem;margin-bottom:0.75rem;display:block; }
+    .soft-name { font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;margin-bottom:0.3rem; }
+    .soft-desc { font-size:0.75rem;color:var(--clr-text-muted);line-height:1.65; }
+
+    .cv-card    { padding:3rem;text-align:center; }
+    .cv-card h3 { font-size:1.6rem;font-weight:800;margin-bottom:0.75rem; }
+    .cv-card p  { font-size:0.84rem;color:var(--clr-text-muted);max-width:420px;margin:0 auto 2rem;line-height:1.8; }
+
+    @media(max-width:576px){ .timeline{padding-left:1.8rem;} .tl-dot{left:-1.8rem;} }
+  </style>
+</head>
+<script src="assets/js/chatbot.js"></script>
+<script src="assets/js/quotes.js"></script>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar" aria-label="Main navigation">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a href="index.html" class="nav-brand">Mouhyadine</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <i class="bi bi-list"></i>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="portfolio-details.html">Projects</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html" class="btn-primary-glow ms-2" style="padding:0.4rem 1.2rem;font-size:0.72rem;"><i class="bi bi-arrow-right-circle"></i> Hire Me</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header" aria-label="Page header">
+  <div class="orb page-header-orb"></div>
+  <div class="container position-relative z-1">
+    <p class="display-mono section-label justify-content-center fade-up delay-1">About Me</p>
+    <h1 class="fade-up delay-2">The engineer<br><span class="text-gradient">behind the code.</span></h1>
+    <p class="fade-up delay-3">Computer Engineering student, first-generation developer from Djibouti, and future Full-Stack Freelancer — here is my story.</p>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<!-- PROFILE INTRO -->
+<section aria-label="Profile introduction">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      <div class="col-lg-4 text-center reveal">
+        <div class="profile-intro-photo">
+          <img src="assets/img/profile.jpg" alt="Mouhya — Full-Stack Developer" />
+        </div>
+      </div>
+
+      <div class="col-lg-8 reveal reveal-delay-1">
+        <div class="intro-name">Mouhya</div>
+        <div class="intro-role">Full-Stack Developer &amp; CS Student</div>
+        <p class="intro-bio mb-4">
+          I am a Computer Engineering student based in Djibouti, proudly part of the very first
+          Computer Science cohort in the country. My academic journey has given me a rigorous,
+          systems-level mindset — I do not just write code, I architect solutions.
+          <br><br>
+          Simultaneously self-taught in modern web technologies, I bridge the gap between
+          theoretical engineering principles and practical product delivery. I am launching
+          my freelance career on Upwork and Fiverr in May 2026, targeting Full-Stack development,
+          Python automation, and data-driven web applications.
+        </p>
+        <div class="mb-4">
+          <span class="info-pill"><i class="bi bi-geo-alt-fill"></i> Djibouti, Djibouti 🇩🇯</span>
+          <span class="info-pill"><i class="bi bi-mortarboard-fill"></i> Computer Engineering</span>
+          <span class="info-pill"><i class="bi bi-translate"></i> French · English · Arabic</span>
+          <span class="info-pill"><i class="bi bi-calendar-check"></i> Available May 2026</span>
+        </div>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="contact.html" class="btn-primary-glow">
+            <i class="bi bi-envelope-fill"></i> Get in Touch
+          </a>
+          <!-- ✅ FIX: CV path changed to root — mouhyadine-cv.pdf must be at the same level as about.html -->
+          <a href="mouhyadine-cv.pdf" download="mouhyadine-cv.pdf" class="btn-glass">
+            <i class="bi bi-download"></i> Download CV
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-row" aria-label="Key numbers">
+  <div class="container">
+    <div class="row g-4 text-center">
+      <div class="col-6 col-md-3">
+        <div class="stat-block reveal">
+          <span class="big counter" data-target="5" data-suffix="+">0+</span>
+          <span class="lbl">Technologies Mastered</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-block reveal reveal-delay-1">
+          <span class="big counter" data-target="3" data-suffix="">0</span>
+          <span class="lbl">Engineering Projects</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-block reveal reveal-delay-2">
+          <span class="big">1st</span>
+          <span class="lbl">CS Cohort in Djibouti</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-block reveal reveal-delay-3">
+          <span class="big counter" data-target="24" data-suffix="h">0h</span>
+          <span class="lbl">Response Time</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- EDUCATION TIMELINE -->
+<section aria-label="Education timeline">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-5">
+        <p class="display-mono section-label reveal">Education</p>
+        <h2 class="section-title reveal reveal-delay-1">Academic<br><span class="text-gradient">journey.</span></h2>
+        <p class="reveal reveal-delay-2" style="color:var(--clr-text-muted);font-size:0.84rem;line-height:1.85;max-width:380px;">
+          Every course, every project, every late-night debugging session has shaped how I think about problems — and how I solve them.
+        </p>
+      </div>
+      <div class="col-lg-7">
+        <div class="timeline">
+          <div class="tl-item reveal">
+            <div class="tl-dot"></div>
+            <div class="tl-date">2023 — Present</div>
+            <div class="tl-title">Bachelor's Degree — Computer Engineering</div>
+            <div class="tl-place">University of Djibouti · Djibouti City</div>
+            <p class="tl-desc">Core curriculum: Data Structures &amp; Algorithms, Operating Systems, Computer Networks, Digital Logic, Numerical Methods, Database Design, Software Engineering, and Linear Algebra.</p>
+          </div>
+          <div class="tl-item reveal reveal-delay-1">
+            <div class="tl-dot"></div>
+            <div class="tl-date">2022 — 2023</div>
+            <div class="tl-title">Scientific Baccalaureate</div>
+            <div class="tl-place">Lycée · Djibouti</div>
+            <p class="tl-desc">Mathematics, Physics, Computer Science specialisation. Foundation for rigorous analytical reasoning.</p>
+          </div>
+          <div class="tl-item reveal reveal-delay-2">
+            <div class="tl-dot"></div>
+            <div class="tl-date">2020 — 2022</div>
+            <div class="tl-title">Self-Directed Learning — Web Development</div>
+            <div class="tl-place">Online · freeCodeCamp · MDN · YouTube</div>
+            <p class="tl-desc">Independent study of HTML, CSS, JavaScript and Python fundamentals well before formal university enrolment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TECHNICAL SKILLS -->
+<section aria-label="Technical skills detail">
+  <div class="container">
+    <p class="display-mono section-label reveal">Technical Stack</p>
+    <h2 class="section-title reveal reveal-delay-1">Every tool, <span class="text-gradient">every level.</span></h2>
+    <p class="mb-5 reveal reveal-delay-2" style="color:var(--clr-text-muted);font-size:0.84rem;max-width:480px;line-height:1.85;">Skill levels are self-assessed with honesty — I only claim proficiency I can demonstrate.</p>
+
+    <div class="skill-detail-grid">
+      <div class="glass-card skg-card reveal reveal-delay-1" data-skill-level="90">
+        <span class="skg-icon">🌐</span>
+        <div class="skg-name">HTML5 &amp; CSS3</div>
+        <span class="skg-level level-advanced">Advanced</span>
+        <div class="skill-tags"><span class="tag">Semantic</span><span class="tag">WCAG</span><span class="tag">CSS Grid</span></div>
+        <div class="skill-bar-wrap mt-2"><div class="skill-bar"></div></div>
+      </div>
+      <div class="glass-card skg-card reveal reveal-delay-2" data-skill-level="88">
+        <span class="skg-icon">🅱️</span>
+        <div class="skg-name">Bootstrap 5</div>
+        <span class="skg-level level-advanced">Advanced</span>
+        <div class="skill-tags"><span class="tag">Responsive</span><span class="tag">Components</span><span class="tag">Utilities</span></div>
+        <div class="skill-bar-wrap mt-2"><div class="skill-bar"></div></div>
+      </div>
+      <div class="glass-card skg-card reveal reveal-delay-1" data-skill-level="82">
+        <span class="skg-icon">⚛️</span>
+        <div class="skg-name">JavaScript &amp; React</div>
+        <span class="skg-level level-advanced">Advanced</span>
+        <div class="skill-tags"><span class="tag">ES2024</span><span class="tag">Hooks</span><span class="tag">Context</span></div>
+        <div class="skill-bar-wrap mt-2"><div class="skill-bar"></div></div>
+      </div>
+      <div class="glass-card skg-card reveal reveal-delay-2" data-skill-level="72">
+        <span class="skg-icon">🟢</span>
+        <div class="skg-name">Node.js &amp; Express</div>
+        <span class="skg-level level-intermediate">Intermediate</span>
+        <div class="skill-tags"><span class="tag">REST API</span><span class="tag">JWT</span><span class="tag">Middleware</span></div>
+        <div class="skill-bar-wrap mt-2"><div class="skill-bar"></div></div>
+      </div>
+      <div class="glass-card skg-card reveal reveal-delay-1" data-skill-level="78">
+        <span class="skg-icon">🐍</span>
+        <div class="skg-name">Python</div>
+        <span class="skg-level level-intermediate">Intermediate</span>
+        <div class="skill-tags"><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Automation</span></div>
+        <div class="skill-bar-wrap mt-2"><div class="skill-bar"></div></div>
+      </div>
+      <div class="glass-card skg-card reveal reveal-delay-2" data-skill-level="70">
+        <span class="skg-icon">📐</span>
+        <div class="skg-name">MATLAB</div>
+        <span class="skg-level level-intermediate">Intermediate</span>
+        <div class="skill-tags"><span class="tag">Num. Methods</span><span class="tag">Simulation</span><span class="tag">Plotting</span></div>
+        <div class="skill-bar-wrap mt-2"><div class="skill-bar"></div></div>
+      </div>
+      <div class="glass-card skg-card reveal reveal-delay-1" data-skill-level="75">
+        <span class="skg-icon">🔌</span>
+        <div class="skg-name">Digital Logic</div>
+        <span class="skg-level level-intermediate">Intermediate</span>
+        <div class="skill-tags"><span class="tag">Boolean</span><span class="tag">Karnaugh</span><span class="tag">VHDL</span></div>
+        <div class="skill-bar-wrap mt-2"><div class="skill-bar"></div></div>
+      </div>
+      <div class="glass-card skg-card reveal reveal-delay-2" data-skill-level="60">
+        <span class="skg-icon">🗄️</span>
+        <div class="skg-name">SQL / Databases</div>
+        <span class="skg-level level-familiar">Familiar</span>
+        <div class="skill-tags"><span class="tag">MySQL</span><span class="tag">SQL</span><span class="tag">Modelling</span></div>
+        <div class="skill-bar-wrap mt-2"><div class="skill-bar"></div></div>
+      </div>
+      <div class="glass-card skg-card reveal reveal-delay-1" data-skill-level="65">
+        <span class="skg-icon">🔧</span>
+        <div class="skg-name">Git &amp; GitHub</div>
+        <span class="skg-level level-familiar">Familiar</span>
+        <div class="skill-tags"><span class="tag">Git Flow</span><span class="tag">CI/CD</span><span class="tag">Pull Requests</span></div>
+        <div class="skill-bar-wrap mt-2"><div class="skill-bar"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOFT SKILLS -->
+<section aria-label="Soft skills">
+  <div class="container">
+    <p class="display-mono section-label reveal">Beyond the Code</p>
+    <h2 class="section-title reveal reveal-delay-1 mb-5">The person <span class="text-gradient">running the machine.</span></h2>
+    <div class="soft-grid">
+      <div class="glass-card soft-card reveal reveal-delay-1">
+        <span class="soft-icon">🧩</span>
+        <div class="soft-name">Problem Solver</div>
+        <p class="soft-desc">I decompose complex problems into tractable sub-problems — a skill honed by engineering coursework.</p>
+      </div>
+      <div class="glass-card soft-card reveal reveal-delay-2">
+        <span class="soft-icon">📖</span>
+        <div class="soft-name">Continuous Learner</div>
+        <p class="soft-desc">Technology evolves; I keep pace. I dedicate time daily to structured self-study and documentation reading.</p>
+      </div>
+      <div class="glass-card soft-card reveal reveal-delay-3">
+        <span class="soft-icon">🤝</span>
+        <div class="soft-name">Clear Communicator</div>
+        <p class="soft-desc">I write clean code and clear commit messages. Client updates are precise, honest and timely.</p>
+      </div>
+      <div class="glass-card soft-card reveal reveal-delay-4">
+        <span class="soft-icon">⏱️</span>
+        <div class="soft-name">Deadline Driven</div>
+        <p class="soft-desc">Reliability is non-negotiable. I plan conservatively and deliver consistently.</p>
+      </div>
+      <div class="glass-card soft-card reveal reveal-delay-1">
+        <span class="soft-icon">🌍</span>
+        <div class="soft-name">Cross-Cultural</div>
+        <p class="soft-desc">Trilingual (French, English, Arabic) and experienced collaborating across time zones and cultures.</p>
+      </div>
+      <div class="glass-card soft-card reveal reveal-delay-2">
+        <span class="soft-icon">🔎</span>
+        <div class="soft-name">Detail Oriented</div>
+        <p class="soft-desc">Whether it is a pixel misaligned or an off-by-one error, I notice it — and I fix it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<div id="quote-api-section"></div>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section aria-label="Certifications">
+  <div class="container">
+    <p class="display-mono section-label reveal">Certifications</p>
+    <h2 class="section-title reveal reveal-delay-1 mb-2">Continuous <span class="text-gradient">learning.</span></h2>
+    <p class="reveal reveal-delay-2 mb-5" style="color:var(--clr-text-muted);font-size:0.84rem;max-width:480px;line-height:1.85;">
+      Four certifications earned through structured online programmes — two from freeCodeCamp, two from Cursa (Traversy Media &amp; Academind).
+    </p>
+    <div class="row g-4">
+      <div class="col-lg-6 reveal reveal-delay-1">
+        <div class="glass-card p-4">
+          <div class="d-flex align-items-start gap-3">
+            <div class="cert-thumb" style="width:80px;height:60px;flex-shrink:0;border-radius:8px;background:linear-gradient(135deg,rgba(99,179,237,0.2),rgba(159,122,234,0.15));border:1px solid rgba(99,179,237,0.25);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+              <img src="assets/img/certs/cert-responsive-web.jpg" alt="Responsive Web Design Certificate" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:0.60rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--clr-accent-cyan);margin-bottom:0.25rem;">freeCodeCamp · 2024</div>
+              <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.3rem;">Responsive Web Design</div>
+              <p style="font-size:0.76rem;color:var(--clr-text-muted);line-height:1.65;margin-bottom:0.75rem;">300 hours covering semantic HTML5, CSS3, Flexbox, Grid, CSS variables and responsive design patterns.</p>
+              <div class="skill-tags"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">Flexbox</span><span class="tag">Grid</span><span class="tag">Responsive</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 reveal reveal-delay-2">
+        <div class="glass-card p-4">
+          <div class="d-flex align-items-start gap-3">
+            <div class="cert-thumb" style="width:80px;height:60px;flex-shrink:0;border-radius:8px;background:linear-gradient(135deg,rgba(237,137,54,0.2),rgba(221,107,32,0.15));border:1px solid rgba(237,137,54,0.25);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+              <img src="assets/img/certs/cert-js-algorithms.jpg" alt="JavaScript Algorithms Certificate" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:0.60rem;letter-spacing:0.12em;text-transform:uppercase;color:#f6ad55;margin-bottom:0.25rem;">freeCodeCamp · 2024</div>
+              <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.3rem;">JavaScript Algorithms &amp; Data Structures</div>
+              <p style="font-size:0.76rem;color:var(--clr-text-muted);line-height:1.65;margin-bottom:0.75rem;">300 hours covering ES6+, regular expressions, debugging, OOP, functional programming and classic algorithm challenges.</p>
+              <div class="skill-tags"><span class="tag">ES6+</span><span class="tag">Algorithms</span><span class="tag">OOP</span><span class="tag">Data Structures</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 reveal reveal-delay-1">
+        <div class="glass-card p-4">
+          <div class="d-flex align-items-start gap-3">
+            <div class="cert-thumb" style="width:80px;height:60px;flex-shrink:0;border-radius:8px;background:linear-gradient(135deg,rgba(72,187,120,0.2),rgba(56,161,105,0.15));border:1px solid rgba(72,187,120,0.25);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+              <img src="assets/img/certs/cert-nodejs-traversy.jpg" alt="Node.js Complete Certificate" style="width:100%;height:100%;object-fit:cover;" />
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:0.60rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--clr-accent-teal);margin-bottom:0.25rem;">Traversy Media · Cursa · 2025</div>
+              <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.3rem;">Node.js — The Complete Guide</div>
+              <p style="font-size:0.76rem;color:var(--clr-text-muted);line-height:1.65;margin-bottom:0.75rem;">Comprehensive Node.js course covering server fundamentals, Express, file system, async programming, REST APIs and deployment.</p>
+              <div class="skill-tags"><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">Async/Await</span><span class="tag">REST</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 reveal reveal-delay-2">
+        <div class="glass-card p-4">
+          <div class="d-flex align-items-start gap-3">
+            <div class="cert-thumb" style="width:80px;height:60px;flex-shrink:0;border-radius:8px;background:linear-gradient(135deg,rgba(159,122,234,0.2),rgba(128,90,213,0.15));border:1px solid rgba(159,122,234,0.25);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+              <img src="assets/img/certs/cert-restapi-academind.jpg" alt="REST API Certificate" style="width:100%;height:100%;object-fit:cover;" />
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:0.60rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--clr-accent-violet);margin-bottom:0.25rem;">Academind · Cursa · 2025</div>
+              <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.3rem;">REST API with Node.js</div>
+              <p style="font-size:0.76rem;color:var(--clr-text-muted);line-height:1.65;margin-bottom:0.75rem;">REST API design principles, HTTP verbs, route structuring, Mongoose schemas, JWT authentication and API security best practices.</p>
+              <div class="skill-tags"><span class="tag">REST API</span><span class="tag">JWT</span><span class="tag">Mongoose</span><span class="tag">Security</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CV DOWNLOAD -->
+<section aria-label="CV download">
+  <div class="container">
+    <div class="glass-card cv-card reveal">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">📄</div>
+      <h3>Want the full picture?</h3>
+      <p>Download my CV for a structured overview of my academic record, technical skills and project history — formatted for Upwork and Fiverr profiles.</p>
+      <div class="d-flex flex-wrap gap-3 justify-content-center">
+        <!-- ✅ FIX: CV at root level of the project, same folder as about.html -->
+        <a href="mouhyadine-cv.pdf" download="mouhyadine-cv.pdf" class="btn-primary-glow">
+          <i class="bi bi-file-earmark-pdf-fill"></i> Download CV (PDF)
+        </a>
+        <a href="contact.html" class="btn-glass">
+          <i class="bi bi-chat-dots-fill"></i> Prefer to talk?
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer aria-label="Site footer">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+      <div>
+        <div class="footer-brand mb-1">Mouhyadine</div>
+        <p class="footer-copy">© 2026 — Designed &amp; coded with rigour from Djibouti 🇩🇯</p>
+      </div>
+      <div class="footer-social d-flex gap-2">
+        <a href="https://github.com/Mouhya01" target="_blank" rel="noopener" aria-label="GitHub"><i class="bi bi-github"></i></a>
+        <a href="https://www.linkedin.com/in/mouhyadine-zakaria-b2b571366/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
